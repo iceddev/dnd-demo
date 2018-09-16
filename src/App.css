@@ -1,0 +1,80 @@
+.App {
+  text-align: center;
+}
+
+
+.App-title {
+  font-size: 1.5em;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+
+.port {
+  stroke: #999;
+  stroke-width: 1;
+  fill: #ddd;
+  cursor: crosshair;
+  transition: fill 300ms linear;
+  transition: stroke 300ms linear;
+}
+
+.port:hover {
+  stroke: black;
+  stroke-width: 1;
+  fill: orange;
+  transition: fill 500ms linear;
+  transition: stroke 500ms linear;
+}
+
+.node_selected {
+  stroke-width: 3;
+  stroke: #ff7f0e;
+}
+
+.node {
+  stroke: #999;
+  cursor: move;
+  stroke-width: 1;
+  transition: stroke-width 300ms linear;
+  transition: stroke 300ms linear;
+}
+
+.node:hover {
+  stroke: #555;
+  stroke-width: 3;
+  transition: stroke-width 500ms linear;
+  transition: stroke 500ms linear;
+}
+
+.link_line {
+  stroke: #888;
+  stroke-width: 7;
+  fill: none;
+  pointer-events: stroke;
+}
+
+
+
+.link_inner {
+  stroke: #0F0;
+  stroke-width: 4;
+  fill: none;
+  pointer-events: stroke;
+  transition: stroke 200ms linear;
+}
+
+.link_inner_selected {
+  stroke: #F00;
+  stroke-width: 4;
+  fill: none;
+  pointer-events: stroke;
+  transition: stroke 300ms linear;
+}
