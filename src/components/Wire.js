@@ -1,14 +1,10 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 
 
-export default class Path extends Component {
+export default class Path extends PureComponent {
   constructor(props) {
     console.log('constructor', props)
     super(props);
-    this.state = {
-      selected: false
-    };
-
   }
 
   componentWillUnmount () {
@@ -19,17 +15,19 @@ export default class Path extends Component {
 
 
   handleMouseDown = (e) => {
-    console.log('mouse DOWN', e);
+    console.log('mouse DOWN', e, this.props);
 
     document.addEventListener('mousemove', this.handleMouseMove);
-    this.setState({selected: true});
+    // this.setState({selected: true});
+    this.props.setSelected(this.props.id, true);
   };
   
   handleMouseUp = (e) => {
     console.log('MOUSE UP', e);
     document.removeEventListener('mousemove', this.handleMouseMove);
 
-    this.setState({selected: false});
+    // this.setState({selected: false});
+    this.props.setSelected(this.props.id, false);
   };
 
   handleTouchStart = (e) => {
@@ -52,11 +50,10 @@ export default class Path extends Component {
 
   handleDoubleClick (e) {
     console.log('dbl clicked', e, this);
-    this.setState({x: this.state.x + 10, fill: 'red'});
   };
 
   render() {
-    const { p } = this.props;
+    const p = this.props;
     return (
       <g>
         <path 
@@ -68,7 +65,7 @@ export default class Path extends Component {
           onTouchEnd={this.handleTouchEnd}
         />
         <path 
-          className={this.state.selected ? 'link_inner_selected' : 'link_inner'} 
+          className={this.props.selected ? 'link_inner_selected' : 'link_inner'} 
           d={`M ${p.x} ${p.y} C ${p.x2} ${p.y2} ${p.x3} ${p.y3} ${p.x4} ${p.y4}`} 
           onMouseDown={this.handleMouseDown}
           onMouseUp={this.handleMouseUp}

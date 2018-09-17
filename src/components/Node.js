@@ -1,17 +1,11 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 
 import { times } from 'lodash';
 
-export default class Node extends Component {
+export default class Node extends PureComponent {
   constructor(props) {
     console.log('constructor', props)
     super(props);
-    this.state = {
-      x: this.props.x,
-      y: this.props.y,
-      fill: 'lightblue'
-    };
-
   }
 
   componentWillUnmount () {
@@ -28,7 +22,7 @@ export default class Node extends Component {
       y: e.pageY
     }
     document.addEventListener('mousemove', this.handleMouseMove);
-    this.setState({selected: true});
+    this.props.setSelected(this.props.node, true);
   };
   
   handleMouseUp = (e) => {
@@ -36,7 +30,7 @@ export default class Node extends Component {
     document.removeEventListener('mousemove', this.handleMouseMove);
     this.coords = {};
     // // this.setState({fill: 'green'});
-    this.setState({selected: false});
+    this.props.setSelected(this.props.node, false);
   };
 
   handleTouchStart = (e) => {
@@ -46,15 +40,14 @@ export default class Node extends Component {
       y: e.touches[0].pageY
     }
     document.addEventListener('touchmove', this.handleTouchMove);
-    this.setState({selected: true});
+    this.props.setSelected(this.props.node, true);
   };
   
   handleTouchEnd = (e) => {
     console.log('Touch End', e);
     document.removeEventListener('touchmove', this.handleTouchMove);
     this.coords = {};
-    // this.setState({fill: 'green'});
-    this.setState({selected: false});
+    this.props.setSelected(this.props.node, false);
   };
   
   handleTouchMove = (e) => {
@@ -67,6 +60,7 @@ export default class Node extends Component {
 
     this.coords.x = Math.round(e.pageX);
     this.coords.y = Math.round(e.pageY);
+    
     const newX = this.props.x - xDiff;
     const newY = this.props.y - yDiff;
     
@@ -74,7 +68,9 @@ export default class Node extends Component {
   };
 
   handleMouseMove = (e) => {
-    
+    e.preventDefault(); // Let's stop this event.
+    e.stopPropagation(); // Really this time.
+
     // console.log('mouse move', e);    
     const xDiff = this.coords.x - e.pageX;
     const yDiff = this.coords.y - e.pageY;
@@ -85,21 +81,22 @@ export default class Node extends Component {
     const newX = this.props.x - xDiff;
     const newY = this.props.y - yDiff;
 
+    // this.props.move(this.props.node, newX, newY);
     this.props.move(this.props.node, newX, newY);
   };
 
   handleDoubleClick (e) {
     console.log('dbl clicked', e, this);
-    this.setState({x: this.state.x + 10, fill: 'red'});
+    // this.setState({x: this.state.x + 10, fill: 'red'});
   };
 
   render() {
-    const { fill } = this.state;
+    // const { fill } = this.state;
 
     return (
       <g transform={`translate(${this.props.x}, ${this.props.y})`}>
         <rect
-          className={this.state.selected ? 'node_selected' : 'node'}
+          className={this.props.selected ? 'node_selected' : 'node'}
           width={this.props.width}
           height={this.props.height}
           rx="3" 
@@ -109,7 +106,7 @@ export default class Node extends Component {
           onTouchStart={this.handleTouchStart}
           onTouchEnd={this.handleTouchEnd}
           onDoubleClick={this.handleDoubleClick.bind(this)}
-          fill={fill}
+          fill={'lightblue'}
         />
         <g>
           <polygon 
