@@ -1,0 +1,8 @@
+{
+  "url": "dat://6d5c6f265d3446e51be11b899dbf166d4567393fe1e96a446d6cf21712ac7fb9/",
+  "title": "react-chirp",
+  "description": "testing out new UI for chirpers",
+  "experimental": {
+    "apis": ["datPeers"]
+  }
+}

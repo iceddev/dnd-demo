@@ -121,7 +121,7 @@ export default class Node extends PureComponent {
             <g key={idx}>
               <polygon 
                 className="port"
-                points="0,2 9,-1 14,-1 14,11 9,11 0,8"
+                points="0,2 9,-1 14,0 14,10 9,11 0,8"
                 fill="grey"
                 transform={`translate(${this.props.width - 4}, ${(20 * idx) + 15})`}
               />
